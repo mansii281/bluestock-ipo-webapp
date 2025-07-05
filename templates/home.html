@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}IPO Listings | Bluestock{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-4 text-center">📈 Upcoming IPOs</h2>
+
+  {% if ipos %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      {% for ipo in ipos %}
+        <div class="col">
+          <div class="card h-100 shadow-sm">
+            {% if ipo.logo %}
+              <img src="{{ ipo.logo.url }}" class="card-img-top" alt="{{ ipo.company_name }} Logo" style="height: 200px; object-fit: contain;">
+            {% endif %}
+
+            <div class="card-body">
+              <h5 class="card-title">{{ ipo.company_name }}</h5>
+              <p class="card-text">
+                <strong>Open:</strong> {{ ipo.open_date }}<br>
+                <strong>Close:</strong> {{ ipo.close_date }}<br>
+                <strong>Price Band:</strong> ₹{{ ipo.price_band }}<br>
+                <strong>Listing Date:</strong> {{ ipo.listing_date }}
+              </p>
+              {% if ipo.rhp_drhp %}
+                <a href="{{ ipo.rhp_drhp.url }}" class="btn btn-outline-primary btn-sm" target="_blank">
+                  View RHP/DRHP <i class="fa fa-file-pdf"></i>
+                </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-warning text-center">
+      No IPOs found.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

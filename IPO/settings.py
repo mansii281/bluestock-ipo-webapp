@@ -87,8 +87,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'bluestock',
-        'USER': 'daiyanalam',
-        'PASSWORD': '12345',
+        'USER': 'mansi',
+        'PASSWORD': 'Mansi@123',
         'HOST': 'localhost',
         'PORT': '5432',  
     }
@@ -116,3 +116,10 @@ AUTH_USER_MODEL = "account.CustomUser"
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# JWT Authentication with SimpleJWT
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}

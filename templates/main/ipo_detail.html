@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}{{ ipo.company_name }} - IPO Details{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <a href="{% url 'main_view' %}" class="btn btn-sm btn-outline-secondary mb-3">&larr; Back to Listings</a>
+
+  <div class="row">
+    <div class="col-md-4">
+      {% if ipo.logo %}
+        <img src="{{ ipo.logo.url }}" alt="{{ ipo.company_name }} Logo" class="img-fluid mb-3" style="max-height: 250px;" />
+      {% endif %}
+    </div>
+    <div class="col-md-8">
+      <h2>{{ ipo.company_name }}</h2>
+      <ul class="list-group">
+        <li class="list-group-item"><strong>Price Band:</strong> ₹{{ ipo.price_band }}</li>
+        <li class="list-group-item"><strong>Open Date:</strong> {{ ipo.open_date }}</li>
+        <li class="list-group-item"><strong>Close Date:</strong> {{ ipo.close_date }}</li>
+        <li class="list-group-item"><strong>Listing Date:</strong> {{ ipo.listing_date }}</li>
+      </ul>
+
+      {% if ipo.rhp_drhp %}
+        <a href="{{ ipo.rhp_drhp.url }}" class="btn btn-outline-primary mt-3" target="_blank">Download RHP/DRHP</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

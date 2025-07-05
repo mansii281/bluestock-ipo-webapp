@@ -1,14 +1,22 @@
 from django.db import models
 
 class Card(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    # Add more fields here if needed
+
+    def __str__(self):
+        return self.title
+
+
+class IPO(models.Model):
     company_name = models.CharField(max_length=255)
-    logo = models.ImageField(upload_to='logos/')
+    open_date = models.DateField()
+    close_date = models.DateField()
     price_band = models.CharField(max_length=100)
-    open_date = models.DateField(blank=True, null=True)
-    close_date = models.DateField(blank=True, null=True)
-    issue_size = models.CharField(max_length=100)
-    listing_date = models.DateField(blank=True, null=True)
-    rhp_drhp = models.CharField(max_length=50)  # This can be 'RHIP' or 'DHRP'
+    listing_date = models.DateField()
+    logo = models.ImageField(upload_to='logos/')
+    rhp_drhp = models.FileField(upload_to='documents/')
 
     def __str__(self):
         return self.company_name

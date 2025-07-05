@@ -1,5 +1,12 @@
-from django.shortcuts import render
+# main/views.py
 
-# Create your views here.
+from django.shortcuts import render, get_object_or_404
+from cardapi.models import IPO
+
 def main_view(request):
-    return render(request, 'main/main.html')
+    ipos = IPO.objects.all()
+    return render(request, 'home.html', {'ipos': ipos})
+
+def ipo_detail_view(request, pk):
+    ipo = get_object_or_404(IPO, pk=pk)
+    return render(request, 'ipo_detail.html', {'ipo': ipo})
