@@ -65,8 +65,10 @@ WSGI_APPLICATION = 'IPO.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='sqlite:///db.sqlite3',  # fallback to SQLite
-        conn_max_age=600
+        default='postgresql://bluestock_db_2ui2_user:hviAdUDMTcMOePG7Zbhn54SmSB4OOLNB@dpg-d1la4lh5pdvs73bnqhh0-a/bluestock_db_2ui2',
+        conn_max_age=600,
+        ssl_require=True
+
     )
 }
 
