@@ -19,8 +19,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # Project apps
-    'ipoapp',
+   'account',
+    'main',
+    'cardapi',
 
     # 3rd-party apps
     'rest_framework',
