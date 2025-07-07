@@ -2,11 +2,11 @@ import os
 from pathlib import Path
 import dj_database_url
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Build paths
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Load environment variables
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'insecure-default-key')
+# Environment variables
+SECRET_KEY = os.environ.get('SECRET_KEY', 'insecure-default-key')
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 
@@ -19,19 +19,21 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    # your apps
-    'account',
-    'cardapi',
-    'captcha',
+    # Third-party
     'rest_framework',
     'corsheaders',
+    'captcha',
+    
+    # Your apps
+    'account',
+    'cardapi',
 ]
 
 AUTH_USER_MODEL = 'account.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # for serving static files
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # static file serving in production
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -61,31 +63,21 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'IPO.wsgi.application'
 
-# Database
-
+# Database configuration from Railway environment
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresql://bluestock_db_2ui2_user:hviAdUDMTcMOePG7Zbhn54SmSB4OOLNB@dpg-d1la4lh5pdvs73bnqhh0-a/bluestock_db_2ui2',
+        default=os.environ.get("DATABASE_URL"),
         conn_max_age=600,
-        ssl_require=True
-
+        ssl_require=True,
     )
 }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
 # Internationalization
@@ -94,20 +86,20 @@ TIME_ZONE = 'Asia/Kolkata'
 USE_I18N = True
 USE_TZ = True
 
-# Static files
+# Static files (CSS, JS, etc.)
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Media files
+# Media files (images, logos, etc.)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# REST Framework
+# Django REST Framework
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -117,5 +109,5 @@ REST_FRAMEWORK = {
     ]
 }
 
-# CORS
+# CORS settings
 CORS_ALLOW_ALL_ORIGINS = True
